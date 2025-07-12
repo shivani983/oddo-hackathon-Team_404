@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -94,3 +95,5 @@ function App() {
 }
 
 export default App;
+=======
+>>>>>>> 613664d0b961cb136f4e19b9672b473e2717d9f1

@@ -5,8 +5,39 @@ const cloudinary = require("../utils/cloudinary");
 const Item = require("../models/Item");
 const SwapRequest = require("../models/SwapRequest");
 const auth = require("../middleware/authMiddleware");
+const admin = require("../middleware/adminMiddleware");
+
 
 const router = express.Router();
+
+// @route GET /api/admin/items
+router.get("/admin/items", auth, admin, async (req, res) => {
+  const items = await Item.find().populate("uploader", "name email");
+  res.json(items);
+});
+
+router.patch("/admin/items/approve/:id", auth, admin, async (req, res) => {
+  const item = await Item.findById(req.params.id);
+  if (!item) return res.status(404).json({ msg: "Item not found" });
+
+  item.approved = true;
+  await item.save();
+  res.json({ msg: "Item approved" });
+});
+router.delete("/admin/items/:id", auth, admin, async (req, res) => {
+  const item = await Item.findByIdAndDelete(req.params.id);
+  if (!item) return res.status(404).json({ msg: "Item not found or already deleted" });
+  res.json({ msg: "Item deleted" });
+});
+router.get("/admin/stats", auth, admin, async (req, res) => {
+  const total = await SwapRequest.countDocuments();
+  const pending = await SwapRequest.countDocuments({ status: "pending" });
+  const accepted = await SwapRequest.countDocuments({ status: "accepted" });
+  const completed = await SwapRequest.countDocuments({ status: "completed" });
+
+  res.json({ total, pending, accepted, completed });
+});
+
 
 // 🔧 Setup Cloudinary Storage
 const storage = new CloudinaryStorage({
@@ -101,22 +132,26 @@ router.post("/swap/:itemId", auth, async (req, res) => {
  * ✅ GET INCOMING REQUESTS (Protected)
  * ========================================
  */
+// 🔸 GET: Get requests for logged-in user’s items
 router.get("/requests/incoming", auth, async (req, res) => {
   try {
     const requests = await SwapRequest.find({ status: "pending" })
-      .populate("item requester", "title name email");
+      .populate("item", "title uploader imageUrl")
+      .populate("requester", "name email");
 
-    // Filter only requests for items uploaded by logged-in user
+    // Safe filtering in case item is null
     const userRequests = requests.filter(
-      (r) => r.item.uploader.toString() === req.user.id
+      (r) => r.item?.uploader?.toString() === req.user.id
     );
 
-    res.json(userRequests);
+    res.json(userRequests); // ✅ always returns array
   } catch (err) {
-    console.error("Get requests error:", err);
-    res.status(500).json({ msg: "Failed to get swap requests" });
+    console.error("Incoming request fetch error:", err);
+    res.status(500).json({ msg: "Server error fetching incoming swap requests" });
   }
 });
+
+
 // @route GET /api/items/my-items
 // @desc Get all items uploaded by current user
 // @access Private
