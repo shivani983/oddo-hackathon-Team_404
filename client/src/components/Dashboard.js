@@ -25,19 +25,38 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 text-center">
-      <h2 className="text-2xl font-bold mb-4">User Dashboard</h2>
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 text-center animate-fade-in">
+      <h2 className="text-2xl font-bold mb-4 text-indigo-700">👤 My Profile</h2>
+
       {user ? (
-        <div className="space-y-2">
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Points:</strong> {user.points}</p>
-          <button onClick={logout} className="mt-4 px-4 py-2 bg-red-600 text-white rounded">
+        <div className="space-y-3">
+          <div className="text-left">
+            <p className="text-gray-700">
+              <strong>Name:</strong> {user.name}
+            </p>
+            <p className="text-gray-700">
+              <strong>Email:</strong> {user.email}
+            </p>
+            <p className="text-gray-700">
+              <strong>Points:</strong>{" "}
+              <span className="inline-block bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                {user.points}
+              </span>
+            </p>
+            {user.isAdmin && (
+              <p className="text-sm text-yellow-600 mt-2">🛡 Admin Account</p>
+            )}
+          </div>
+
+          <button
+            onClick={logout}
+            className="mt-4 bg-red-500 hover:bg-red-600 transition text-white font-semibold px-4 py-2 rounded shadow"
+          >
             Logout
           </button>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="text-gray-500">Loading profile...</p>
       )}
     </div>
   );
