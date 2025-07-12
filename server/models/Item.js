@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const SwapRequest = require("../models/SwapRequest");
 
 const ItemSchema = new mongoose.Schema({
   title: { type: String, required: true },
