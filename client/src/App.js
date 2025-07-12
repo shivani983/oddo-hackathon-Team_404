@@ -4,6 +4,11 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import UploadItem from "./components/UploadItem"; 
 import ItemsList from "./components/ItemsList";
+<<<<<<< HEAD
+=======
+import SwapRequests from "./components/SwapRequests";
+
+>>>>>>> df46530b82529bb6d20a75a6758eeb944c14cfc7
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -29,8 +34,17 @@ function App() {
       )}
 
       <ItemsList /> {/* Anyone can view listed items */}
+<<<<<<< HEAD
+=======
+      <SwapRequests />
+
+>>>>>>> df46530b82529bb6d20a75a6758eeb944c14cfc7
     </div>
   );
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> df46530b82529bb6d20a75a6758eeb944c14cfc7

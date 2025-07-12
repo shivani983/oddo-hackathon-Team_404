@@ -55,3 +55,7 @@ const UploadItem = () => {
 };
 
 export default UploadItem;
+<<<<<<< HEAD
+=======
+
+>>>>>>> df46530b82529bb6d20a75a6758eeb944c14cfc7
