@@ -17,7 +17,7 @@ const SwapRequests = () => {
 
   const handleAction = async (id, status) => {
     const token = localStorage.getItem("token");
-    const res = await fetch(http://localhost:5000/api/items/swap/${id}, {
+    const res = await fetch(`http://localhost:5000/api/items/swap/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

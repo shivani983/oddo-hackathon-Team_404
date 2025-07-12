@@ -12,7 +12,7 @@ const ItemsList = () => {
 
   const handleRequestSwap = async (itemId) => {
     try {
-      const res = await fetch(http://localhost:5000/api/items/swap/${itemId}, {
+      const res = await fetch(`http://localhost:5000/api/items/swap/${itemId}`, {
         method: "POST",
         headers: {
           Authorization: token,

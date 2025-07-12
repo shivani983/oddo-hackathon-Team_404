@@ -117,6 +117,34 @@ router.get("/requests/incoming", auth, async (req, res) => {
     res.status(500).json({ msg: "Failed to get swap requests" });
   }
 });
+// @route GET /api/items/my-items
+// @desc Get all items uploaded by current user
+// @access Private
+router.get("/my-items", auth, async (req, res) => {
+  try {
+    const items = await Item.find({ uploader: req.user.id });
+    res.json(items);
+  } catch (err) {
+    console.error("My Items error:", err);
+    res.status(500).json({ message: "Failed to fetch your items" });
+  }
+});
+// @route GET /api/items/my-requests
+// @desc Get all swap requests made by current user
+// @access Private
+router.get("/my-requests", auth, async (req, res) => {
+  try {
+    const requests = await SwapRequest.find({ requester: req.user.id })
+      .populate("item", "title imageUrl uploader")
+      .populate("requester", "name");
+
+    res.json(requests);
+  } catch (err) {
+    console.error("My Requests error:", err);
+    res.status(500).json({ message: "Failed to fetch your swap requests" });
+  }
+});
+
 
 /**
  * ========================================
