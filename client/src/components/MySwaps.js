@@ -17,7 +17,11 @@ const MySwaps = () => {
   }, []);
 
   const markCompleted = async (id) => {
+<<<<<<< HEAD
     const res = await fetch(`http://localhost:5000/api/items/swap/complete/${id}`, {
+=======
+    const res = await fetch(http://localhost:5000/api/items/swap/complete/${id}, {
+>>>>>>> 945cf8bc3d0cd803c370ac7135c2a848a613f65e
       method: "PATCH",
       headers: { Authorization: token },
     });
@@ -27,7 +31,11 @@ const MySwaps = () => {
   };
 
   const cancelSwap = async (id) => {
+<<<<<<< HEAD
     const res = await fetch(`http://localhost:5000/api/items/swap/${id}`, {
+=======
+    const res = await fetch(http://localhost:5000/api/items/swap/${id}, {
+>>>>>>> 945cf8bc3d0cd803c370ac7135c2a848a613f65e
       method: "DELETE",
       headers: { Authorization: token },
     });
@@ -80,4 +88,8 @@ const MySwaps = () => {
   );
 };
 
+<<<<<<< HEAD
 export default MySwaps;
+=======
+export default MySwaps;
+>>>>>>> 945cf8bc3d0cd803c370ac7135c2a848a613f65e
