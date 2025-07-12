@@ -7,6 +7,7 @@ import ItemsList from "./components/ItemsList";
 import SwapRequests from "./components/SwapRequests";
 import MyItems from "./components/MyItems";
 import MyRequests from "./components/MyRequests";
+import MySwaps from "./components/MySwaps";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -42,6 +43,7 @@ function App() {
           <MyItems />
           <MyRequests />
           <SwapRequests />
+          <MySwaps />
         </>
       ) : (
         <div className="flex justify-around flex-wrap gap-6">

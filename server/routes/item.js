@@ -144,7 +144,52 @@ router.get("/my-requests", auth, async (req, res) => {
     res.status(500).json({ message: "Failed to fetch your swap requests" });
   }
 });
+// @route DELETE /api/items/swap/:id
+// @desc Requester cancels their own swap request
+// @access Private
+router.delete("/swap/:id", auth, async (req, res) => {
+  try {
+    const request = await SwapRequest.findById(req.params.id);
 
+    if (!request) return res.status(404).json({ msg: "Request not found" });
+
+    if (request.requester.toString() !== req.user.id) {
+      return res.status(403).json({ msg: "Not authorized to cancel this request" });
+    }
+
+    await request.deleteOne();
+    res.json({ msg: "Swap request cancelled" });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// @route GET /api/items/my-swaps
+// @desc Return all swap requests related to logged-in user (sent or received)
+// @access Private
+router.get("/my-swaps", auth, async (req, res) => {
+  try {
+    const received = await SwapRequest.find()
+      .populate("item requester", "title name email imageUrl")
+      .where("status").in(["accepted", "completed"]);
+
+    const sent = await SwapRequest.find({ requester: req.user.id })
+      .populate("item", "title imageUrl uploader")
+      .populate("requester", "name");
+
+    // Filter: either sent by or items owned by user
+    const userReceived = received.filter(
+      (r) => r.item.uploader.toString() === req.user.id
+    );
+
+    res.json({
+      sent,
+      received: userReceived
+    });
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch swap data" });
+  }
+});
 
 /**
  * ========================================
