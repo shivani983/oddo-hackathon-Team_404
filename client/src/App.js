@@ -2,28 +2,33 @@ import { useEffect, useState } from "react";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import UploadItem from "./components/UploadItem"; 
+import ItemsList from "./components/ItemsList";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  // Update token when user logs in
-  useEffect(() => {
-    const stored = localStorage.getItem("token");
-    setToken(stored);
-  }, []);
+  const handleLoginSuccess = () => {
+    setToken(localStorage.getItem("token"));
+  };
 
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">ReWear App</h1>
 
       {token ? (
-        <Dashboard />
+        <>
+          <Dashboard />
+          <UploadItem />
+        </>
       ) : (
         <div className="flex justify-around">
-          <Signup onSuccess={() => setToken(localStorage.getItem("token"))} />
-          <Login onSuccess={() => setToken(localStorage.getItem("token"))} />
+          <Signup onSuccess={handleLoginSuccess} />
+          <Login onSuccess={handleLoginSuccess} />
         </div>
       )}
+
+      <ItemsList /> {/* Anyone can view listed items */}
     </div>
   );
 }
