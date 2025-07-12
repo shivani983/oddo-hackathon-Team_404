@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import UploadItem from "./components/UploadItem"; 
 import ItemsList from "./components/ItemsList";
+import SwapRequests from "./components/SwapRequests";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -29,6 +30,7 @@ function App() {
       )}
 
       <ItemsList /> {/* Anyone can view listed items */}
+      <SwapRequests />
     </div>
   );
 }
