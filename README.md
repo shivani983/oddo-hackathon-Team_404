@@ -28,6 +28,8 @@ The goal is to promote sustainable fashion and reduce textile waste by encouragi
 
 ---
 
+Demo Video link:- https://drive.google.com/drive/folders/1s5iq9wFJDLXCrTNJBeNtCcwj6CwHEFyc?usp=drive_link
+
 ## 👥 Team Members
 
 ### 🔹 Shivani Virang
